@@ -44,7 +44,7 @@ class cars:
     def move(self):
         self.y_location +=25
         if self.y_location > 600:
-          self.y_location = random.randint(-300,0)
+          self.y_location = random.randint(-500,-50)
 
               
         
