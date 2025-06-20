@@ -22,7 +22,8 @@ yellow= (255, 255, 0)
 clock = pygame.time.Clock()
 
 
-#game loop 
+#game loop
+
 
 
 class cars:
@@ -38,16 +39,19 @@ class cars:
         enemy_resized_car = pygame.transform.smoothscale(enemy_car_image, [ 50,100])
         screen.blit(enemy_resized_car, enemy_car )
 
-
+  
    
         
     def move(self):
         self.y_location +=25
         if self.y_location > 600:
           self.y_location = random.randint(-500,-50)
+          
 
-              
-        
+
+
+    
+
    
 first_car = cars(-300, 450, "car_2.png")
 second_car = cars(-150, 300, "car_3.png")
@@ -55,10 +59,8 @@ third_car = cars(-260, 100, "car_4.png")
 
 
 
-
 car_x =290
 car_y = 380
-
 
 car_x_change= 0
 car_y_change= 0
@@ -96,8 +98,16 @@ while running:
     third_car.draw()
     third_car.move()
     
+    if car_x < 90:
+       car_x =90
+    if car_x >470:
+       car_x =470
+       
     
     
+
+
+
     
     car_x += car_x_change
     car_y += car_y_change
@@ -111,9 +121,8 @@ while running:
         quit_game = True
 
         
+         
     
-
-
    
     clock.tick(13)
     pygame.display.update()
