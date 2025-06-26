@@ -4,7 +4,7 @@ import time
 
 #create screen
 pygame.init()
-screen = pygame.display.set_mode((600,600))
+screen = pygame.display.set_mode((490,600))
 game_icon=pygame.image.load("game_icon.png")
 pygame.display.set_icon(game_icon)
 pygame.display.set_caption("2D Car game ")
@@ -25,11 +25,14 @@ clock = pygame.time.Clock()
 
 
 #font
-font=pygame.font.Font("freesansbold.ttf", 30)
-exit_font=pygame.font.Font("freesansbold.ttf",30)
-score_font=pygame.font.SysFont("arialblack",50)
+font=pygame.font.Font("freesansbold.ttf", 20)
+exit_font=pygame.font.Font("freesansbold.ttf",20)
+score_font=pygame.font.SysFont("arialblack",30)
 
-
+def message(msg,txt_colour, bkgd_colour, x_pos, y_pos):
+   txt=font.render(msg, True, txt_colour, bkgd_colour)
+   text_box=txt.get_rect(center=(x_pos,y_pos))
+   screen.blit(txt, text_box)
 
 
 
@@ -43,13 +46,10 @@ def load_high_score():
     value= hi_score_file.read()
     hi_score_file.close()
     return value
-    
+   
 
 
 #game loop
-
-
-
 class cars:
     def __init__(self, y_location, x_location ,colour,):
         self.y_location = y_location
@@ -67,7 +67,7 @@ class cars:
    
         
     def move(self):
-        self.y_location +=25
+        self.y_location +=15
         if self.y_location > 600:
            self.speed = random.randint (10,20)
            self.y_location = random.randint(-500,-50)
@@ -78,20 +78,21 @@ class cars:
     
 
    
-first_car = cars(-400, 450, "car_2.png")
-second_car = cars(-150, 300, "car_3.png")
-third_car = cars(-280, 100, "car_4.png")
+first_car = cars(-400, 350, "car_2.png")
+second_car = cars(-150, 230, "car_3.png")
+third_car = cars(-280, 110, "car_4.png")
 
 
 
-car_x =290
+car_x =225
 car_y = 380
-
 car_x_change= 0
 car_y_change= 0
+score =0
 
-score =0 
-
+high_score = load_high_score()
+    
+   
 running = True
 while running:
     for event in pygame.event.get():
@@ -113,9 +114,9 @@ while running:
                
     #background 
     screen.fill(light_grey)
-    pygame.draw.rect(screen, darkgrey,(85, 0, 445, 600, ))
-    pygame.draw.rect( screen,yellow ,(220, 0, 20, 600))
-    pygame.draw.rect( screen,yellow ,(390,0, 20, 600))
+    pygame.draw.rect(screen, darkgrey,(80, 0, 340,600))
+    pygame.draw.rect( screen,yellow ,(180, 0, 20, 600))
+    pygame.draw.rect( screen,yellow ,(310,0, 20, 600))
     first_car.draw()
     first_car.move()
     second_car.draw()
@@ -133,13 +134,12 @@ while running:
 
 
     for car in [first_car , second_car, third_car]:
-        enemy_car_rect= pygame.Rect (car.x_location, car.y_location, 50,85)
+        enemy_car_rect= pygame.Rect (car.x_location, car.y_location, 68,83)
         if old_car_rect.colliderect(enemy_car_rect):
            print("game over")
            game_over = True
            running = False
            
-
     
     if car_x < 90:
        car_x =90
@@ -147,9 +147,6 @@ while running:
        car_x =470
 
 
-    high_score = load_high_score()
-    
-   
 
       
     
@@ -165,19 +162,26 @@ while running:
         quit_game = True
 
 
+        
     
-
-
-
-
         
      
     score_msg="score:"+ str(score)
     highscore_msg = "high score:" + str(high_score)
-    message ( str(score_msg), black, 100,100)
-    message (str(highscore_msg), black, 115,60)
+    message (str(score_msg), white, black, 50,50)
+    message (str(highscore_msg), white, black, 60,80)
+
+
+
     
-   
+    clock.tick(10)
+    pygame.display.update()
+
+    
+
+
+
+
 
 
     if (int(score))> (int(high_score)):
@@ -189,20 +193,12 @@ while running:
 
 
     
-    clock.tick(13)
-    pygame.display.update()
-
-
-
-
-
-
-
-
-
+  
 
 
 
 #screen update
-
 screen.fill(light_grey)
+
+
+
