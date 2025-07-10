@@ -29,8 +29,8 @@ font=pygame.font.Font("freesansbold.ttf", 20)
 exit_font=pygame.font.Font("freesansbold.ttf",20)
 score_font=pygame.font.SysFont("arialblack",30)
 
-def message(msg,txt_colour, bkgd_colour, x_pos, y_pos):
-   txt=font.render(msg, True, txt_colour, bkgd_colour)
+def message(msg,txt_colour,  x_pos, y_pos):
+   txt=font.render(msg, True, txt_colour, )
    text_box=txt.get_rect(center=(x_pos,y_pos))
    screen.blit(txt, text_box)
 
@@ -67,7 +67,7 @@ class cars:
    
         
     def move(self):
-        self.y_location +=15
+        self.y_location +=11
         if self.y_location > 600:
            self.speed = random.randint (10,20)
            self.y_location = random.randint(-500,-50)
@@ -78,9 +78,9 @@ class cars:
     
 
    
-first_car = cars(-400, 350, "car_2.png")
-second_car = cars(-150, 230, "car_3.png")
-third_car = cars(-280, 110, "car_4.png")
+first_car = cars(-360, 370, "car_2.png")
+second_car = cars(-500, 230, "car_3.png")
+third_car = cars(-200, 90, "car_4.png")
 
 
 
@@ -114,7 +114,7 @@ while running:
                
     #background 
     screen.fill(light_grey)
-    pygame.draw.rect(screen, darkgrey,(80, 0, 340,600))
+    pygame.draw.rect(screen, darkgrey,(50, 0, 390,600))
     pygame.draw.rect( screen,yellow ,(180, 0, 20, 600))
     pygame.draw.rect( screen,yellow ,(310,0, 20, 600))
     first_car.draw()
@@ -139,12 +139,21 @@ while running:
            print("game over")
            game_over = True
            running = False
+
+
+
+
+
+        hi_score_file= open("HI_score.txt", 'w')
+        hi_score_file.write( str (score))
+        hi_score_file.close()
+
            
     
-    if car_x < 90:
-       car_x =90
-    if car_x >470:
-       car_x =470
+    if car_x < 69:
+       car_x =69
+    if car_x >370:
+       car_x =370
 
 
 
@@ -168,13 +177,14 @@ while running:
      
     score_msg="score:"+ str(score)
     highscore_msg = "high score:" + str(high_score)
-    message (str(score_msg), white, black, 50,50)
-    message (str(highscore_msg), white, black, 60,80)
+    message (str(score_msg), black,  50,50)
+    message (str(highscore_msg), black,  70,85)
 
 
 
     
     clock.tick(10)
+    score+=10
     pygame.display.update()
 
     
@@ -185,15 +195,25 @@ while running:
 
 
     if (int(score))> (int(high_score)):
-        message("NEW HIGH SCORE" , black, 500, 360)
         pygame.display.update()
+        game_over = True
+        game_over = message("NEW HIGH SCORE" ,black , 260,270)
+        pygame.display.update()
+
+
+   
+
+
+        
+ 
+        
         hi_score_file= open("HI_score.txt", 'w')
         hi_score_file.write( str (score))
         hi_score_file.close()
 
 
-    
-  
+
+        
 
 
 
