@@ -2,6 +2,7 @@ import pygame
 import random
 import time 
 
+
 #create screen
 pygame.init()
 screen = pygame.display.set_mode((490,600))
@@ -128,21 +129,39 @@ while running:
 
 
 
- # traffic collisions
-    
+
+
+
+
+
+# traffic collision
+ 
     old_car_rect = pygame.Rect(car_x, car_y, 50,85)
 
+
+
+    if (int(score))> (int(high_score)):
+            pygame.display.update()
+            game_over = message("NEW HIGH SCORE" ,black , 260,270)
+            running = True
+            time.sleep(1)
+          
+   
 
     for car in [first_car , second_car, third_car]:
         enemy_car_rect= pygame.Rect (car.x_location, car.y_location, 68,83)
         if old_car_rect.colliderect(enemy_car_rect):
-           print("game over")
+           game_over = message("Game over" ,black , 260,270)
            game_over = True
            running = False
+           
+
+           pygame.display.update()
 
 
 
 
+    
 
         hi_score_file= open("HI_score.txt", 'w')
         hi_score_file.write( str (score))
@@ -187,18 +206,6 @@ while running:
     score+=10
     pygame.display.update()
 
-    
-
-
-
-
-
-
-    if (int(score))> (int(high_score)):
-        pygame.display.update()
-        game_over = True
-        game_over = message("NEW HIGH SCORE" ,black , 260,270)
-        pygame.display.update()
 
 
    
@@ -206,10 +213,10 @@ while running:
 
         
  
-        
-        hi_score_file= open("HI_score.txt", 'w')
-        hi_score_file.write( str (score))
-        hi_score_file.close()
+                
+    hi_score_file= open("HI_score.txt", 'w')
+    hi_score_file.write( str (score))
+    hi_score_file.close()
 
 
 
