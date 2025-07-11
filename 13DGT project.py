@@ -134,40 +134,14 @@ while running:
 
 
 
-# traffic collision
- 
-    old_car_rect = pygame.Rect(car_x, car_y, 50,85)
 
 
-
-    if (int(score))> (int(high_score)):
-            pygame.display.update()
-            game_over = message("NEW HIGH SCORE" ,black , 260,270)
-            running = True
-            time.sleep(1)
-          
-   
-
-    for car in [first_car , second_car, third_car]:
-        enemy_car_rect= pygame.Rect (car.x_location, car.y_location, 68,83)
-        if old_car_rect.colliderect(enemy_car_rect):
-           game_over = message("Game over" ,black , 260,270)
-           game_over = True
-           running = False
-           
-
-           pygame.display.update()
 
 
 
 
     
 
-        hi_score_file= open("HI_score.txt", 'w')
-        hi_score_file.write( str (score))
-        hi_score_file.close()
-
-           
     
     if car_x < 69:
        car_x =69
@@ -190,8 +164,49 @@ while running:
         quit_game = True
 
 
+
+
+
+
+
+
+
+
+
+
+
+# traffic collision
+ 
+    old_car_rect = pygame.Rect(car_x, car_y, 50,85)
+
+
+
+    if (int(score))> (int(high_score)):
+            pygame.display.update()
+            game_over = message("NEW HIGH SCORE" ,black , 260,270)
+            running = True
+
+           
+
+    for car in [first_car , second_car, third_car]:
+        enemy_car_rect= pygame.Rect (car.x_location, car.y_location, 68,83)
+        if old_car_rect.colliderect(enemy_car_rect):
+           screen.fill(white)
+           game_over = message("GAME OVER! Press R to restart." ,black , 260,270)
+           game_over = True
+           running = False 
+
+      
+
+           pygame.display.update()
+
         
     
+    hi_score_file= open("HI_score.txt", 'w')
+    hi_score_file.write( str (score))
+    hi_score_file.close()
+
+           
         
      
     score_msg="score:"+ str(score)
