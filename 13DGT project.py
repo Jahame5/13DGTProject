@@ -125,21 +125,6 @@ while running:
     third_car.draw()
     third_car.move()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     
 
     
@@ -181,22 +166,22 @@ while running:
 
 
 
-    if (int(score))> (int(high_score)):
-            pygame.display.update()
-            game_over = message("NEW HIGH SCORE" ,black , 260,270)
-            running = True
-
-           
+  
 
     for car in [first_car , second_car, third_car]:
-        enemy_car_rect= pygame.Rect (car.x_location, car.y_location, 68,83)
+        enemy_car_rect= pygame.Rect (car.x_location , car.y_location, 68 , 83)
         if old_car_rect.colliderect(enemy_car_rect):
            screen.fill(white)
-           game_over = message("GAME OVER! Press R to restart." ,black , 260,270)
+           game_over = message("GAME OVER! Press R to restart." , black , 260 , 270)
            game_over = True
            running = False 
 
-      
+
+           if (int(score))> (int(high_score)):
+               pygame.display.update()
+               game_over = message("NEW HIGH SCORE" , black , 260 , 300)
+               game_over=True 
+
 
            pygame.display.update()
 
@@ -215,10 +200,9 @@ while running:
     message (str(highscore_msg), black,  70,85)
 
 
-
     
-    clock.tick(10)
-    score+=10
+    clock.tick(14)
+    score+=15
     pygame.display.update()
 
 
@@ -229,12 +213,7 @@ while running:
         
  
                 
-    hi_score_file= open("HI_score.txt", 'w')
-    hi_score_file.write( str (score))
-    hi_score_file.close()
-
-
-
+    
         
 
 
