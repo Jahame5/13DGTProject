@@ -79,9 +79,10 @@ class cars:
     
 
    
-first_car = cars(-360, 370, "car_2.png")
-second_car = cars(-500, 230, "car_3.png")
-third_car = cars(-200, 90, "car_4.png")
+first_car = cars(-670, 370, "car_2.png")
+second_car = cars(-460, 230, "car_3.png")
+third_car = cars(-300, 90, "car_4.png")
+fourth_car = cars(-100, 100, "car_5.png")
 
 
 
@@ -106,6 +107,7 @@ while running:
            elif event.key == pygame.K_RIGHT:
                car_x_change = 20
                car_y_change = 0
+           
                
          
 
@@ -124,10 +126,10 @@ while running:
     second_car.move()
     third_car.draw()
     third_car.move()
-
+    fourth_car.draw()
+    fourth_car.move()
     
 
-    
     if car_x < 69:
        car_x =69
     if car_x >370:
@@ -163,18 +165,17 @@ while running:
 # traffic collision
  
     old_car_rect = pygame.Rect(car_x, car_y, 50,85)
-
-
-
   
 
-    for car in [first_car , second_car, third_car]:
-        enemy_car_rect= pygame.Rect (car.x_location , car.y_location, 68 , 83)
+    for car in [first_car, second_car, third_car, fourth_car]:
+        enemy_car_rect= pygame.Rect (car.x_location, car.y_location, 68 ,83)
         if old_car_rect.colliderect(enemy_car_rect):
            screen.fill(white)
            game_over = message("GAME OVER! Press R to restart." , black , 260 , 270)
            game_over = True
-           running = False 
+           running = False
+
+   
 
 
            if (int(score))> (int(high_score)):
@@ -183,8 +184,8 @@ while running:
                game_over=True 
 
 
-           pygame.display.update()
-
+               
+             
         
     
     hi_score_file= open("HI_score.txt", 'w')
@@ -197,17 +198,21 @@ while running:
     score_msg="score:"+ str(score)
     highscore_msg = "high score:" + str(high_score)
     message (str(score_msg), black,  50,50)
-    message (str(highscore_msg), black,  70,85)
+    message (str(highscore_msg), black,  80,80)
+
+   
+
+                        
+                                                                     
 
 
-    
-    clock.tick(14)
+       
+    clock.tick(13)
     score+=15
     pygame.display.update()
 
 
-
-   
+          
 
 
         
