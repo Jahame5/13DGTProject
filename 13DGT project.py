@@ -5,7 +5,7 @@ import time
 
 #create screen
 pygame.init()
-screen = pygame.display.set_mode((490,600))
+screen = pygame.display.set_mode((520,600))
 game_icon=pygame.image.load("game_icon.png")
 pygame.display.set_icon(game_icon)
 pygame.display.set_caption("2D Car game ")
@@ -68,10 +68,12 @@ class cars:
    
         
     def move(self):
-        self.y_location +=11
+        global score
+        self.y_location +=10
         if self.y_location > 600:
            self.speed = random.randint (10,20)
            self.y_location = random.randint(-500,-50)
+           score += 1
           
 
 
@@ -79,10 +81,10 @@ class cars:
     
 
    
-first_car = cars(-670, 370, "car_2.png")
-second_car = cars(-460, 230, "car_3.png")
-third_car = cars(-300, 90, "car_4.png")
-fourth_car = cars(-100, 100, "car_5.png")
+first_car = cars(-600, 410, "car_2.png")
+second_car = cars(-1000,290 , "car_3.png")
+third_car = cars(-200, 170, "car_4.png")
+fourth_car = cars(-450, 60, "car_5.png")
 
 
 
@@ -90,7 +92,7 @@ car_x =225
 car_y = 380
 car_x_change= 0
 car_y_change= 0
-score =0
+score = 0
 
 high_score = load_high_score()
     
@@ -117,9 +119,10 @@ while running:
                
     #background 
     screen.fill(light_grey)
-    pygame.draw.rect(screen, darkgrey,(50, 0, 390,600))
-    pygame.draw.rect( screen,yellow ,(180, 0, 20, 600))
-    pygame.draw.rect( screen,yellow ,(310,0, 20, 600))
+    pygame.draw.rect(screen, darkgrey,(40, 0, 435,600))
+    pygame.draw.rect( screen,yellow ,(250, 0, 20, 600))
+    pygame.draw.rect( screen,yellow ,(367,0, 20, 600))
+    pygame.draw.rect( screen,yellow ,(130,0, 20, 600))
     first_car.draw()
     first_car.move()
     second_car.draw()
@@ -128,16 +131,18 @@ while running:
     third_car.move()
     fourth_car.draw()
     fourth_car.move()
-    
+   
+     
+          
+# walls 
 
-    if car_x < 69:
-       car_x =69
-    if car_x >370:
-       car_x =370
+    if car_x < 60:
+       car_x =60
+    if car_x >400:
+       car_x =400
 
+       
 
-
-      
     
     car_x += car_x_change
     car_y += car_y_change
@@ -150,13 +155,7 @@ while running:
     if car_x >= 1000 or car_x < 0 or car_y >= 900 or car_y < 0:
         quit_game = True
 
-
-
-
-
-
-
-
+        
 
 
 
@@ -165,17 +164,23 @@ while running:
 # traffic collision
  
     old_car_rect = pygame.Rect(car_x, car_y, 50,85)
-  
+   
 
     for car in [first_car, second_car, third_car, fourth_car]:
         enemy_car_rect= pygame.Rect (car.x_location, car.y_location, 68 ,83)
         if old_car_rect.colliderect(enemy_car_rect):
-           screen.fill(white)
-           game_over = message("GAME OVER! Press R to restart." , black , 260 , 270)
+           if car.y_location > 600:
+              score += 1
+              screen.fill(white)
+
+              pygame.display.update()
+
+            
+
+           
+           game_over = message("GAME OVER!" , black , 260 , 270)
            game_over = True
            running = False
-
-   
 
 
            if (int(score))> (int(high_score)):
@@ -200,15 +205,20 @@ while running:
     message (str(score_msg), black,  50,50)
     message (str(highscore_msg), black,  80,80)
 
-   
 
-                        
-                                                                     
+  
+
+
+
+
+
+
+     
+                                                            
 
 
        
     clock.tick(13)
-    score+=15
     pygame.display.update()
 
 
