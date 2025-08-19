@@ -1,6 +1,10 @@
+#impirts 
 import pygame
 import random
-import time 
+import time
+
+
+
 
 
 #create screen
@@ -9,6 +13,7 @@ screen = pygame.display.set_mode((520,600))
 game_icon=pygame.image.load("game_icon.png")
 pygame.display.set_icon(game_icon)
 pygame.display.set_caption("2D Car game ")
+screen = pygame.display.set_mode((520,600),pygame.RESIZABLE)
 
 
 #colours
@@ -30,12 +35,13 @@ font=pygame.font.Font("freesansbold.ttf", 20)
 exit_font=pygame.font.Font("freesansbold.ttf",20)
 score_font=pygame.font.SysFont("arialblack",30)
 
+# function to show messages in game to player
 def message(msg,txt_colour,  x_pos, y_pos):
    txt=font.render(msg, True, txt_colour, )
    text_box=txt.get_rect(center=(x_pos,y_pos))
    screen.blit(txt, text_box)
 
-
+# function to load the high score from the file
 
 def load_high_score():
     try:
@@ -50,7 +56,7 @@ def load_high_score():
    
 
 
-#game loop
+#game loop/ move the car/ speed of cars
 class cars:
     def __init__(self, y_location, x_location ,colour,):
         self.y_location = y_location
@@ -63,9 +69,6 @@ class cars:
         enemy_car_image = pygame.image.load(self.colour).convert_alpha()
         enemy_resized_car = pygame.transform.smoothscale(enemy_car_image, [ 50,100])
         screen.blit(enemy_resized_car, enemy_car )
-
-  
-   
         
     def move(self):
         global score
@@ -79,23 +82,31 @@ class cars:
 
 
     
-
+# car locations and png
    
-first_car = cars(-600, 410, "car_2.png")
-second_car = cars(-1000,290 , "car_3.png")
-third_car = cars(-200, 170, "car_4.png")
-fourth_car = cars(-450, 60, "car_5.png")
+first_car = cars(-1000, 410, "car_2.png")
+second_car = cars(-500, 300, "car_3.png")
+third_car = cars(-60, 170, "car_4.png")
+fourth_car = cars( -200, 60, "car_5.png")
 
 
-
-car_x =225
+# main car location 
+car_x =235
 car_y = 380
 car_x_change= 0
 car_y_change= 0
+
+# score function to load score 
 score = 0
 
+#high score function to load the high score 
 high_score = load_high_score()
-    
+
+
+
+
+
+# Main car movement 
    
 running = True
 while running:
@@ -111,18 +122,16 @@ while running:
                car_y_change = 0
            
                
-         
-
-
-
-            
-               
-    #background 
+             
+    #background and road lines 
     screen.fill(light_grey)
     pygame.draw.rect(screen, darkgrey,(40, 0, 435,600))
     pygame.draw.rect( screen,yellow ,(250, 0, 20, 600))
     pygame.draw.rect( screen,yellow ,(367,0, 20, 600))
     pygame.draw.rect( screen,yellow ,(130,0, 20, 600))
+
+
+    #car drawings and movement
     first_car.draw()
     first_car.move()
     second_car.draw()
@@ -134,7 +143,7 @@ while running:
    
      
           
-# walls 
+# road bounderies 
 
     if car_x < 60:
        car_x =60
@@ -143,9 +152,15 @@ while running:
 
        
 
-    
+ # car movement update 
     car_x += car_x_change
     car_y += car_y_change
+
+
+
+
+
+    # Drawing of main car
     old_car= pygame.draw.rect(screen,darkgrey ,(car_x, car_y, 50, 100))
     car_image = pygame.image.load( "car_1.png"  ).convert_alpha()
     resized_car = pygame.transform.smoothscale(car_image, [ 50,100])
@@ -161,28 +176,25 @@ while running:
 
 
 
-# traffic collision
- 
-    old_car_rect = pygame.Rect(car_x, car_y, 50,85)
+    # traffic collision/scoring functtion 
+    old_car_rect = pygame.Rect(car_x, car_y, 55,85)
    
 
     for car in [first_car, second_car, third_car, fourth_car]:
-        enemy_car_rect= pygame.Rect (car.x_location, car.y_location, 68 ,83)
+        enemy_car_rect= pygame.Rect (car.x_location, car.y_location, 55 ,85)
         if old_car_rect.colliderect(enemy_car_rect):
            if car.y_location > 600:
               score += 1
               screen.fill(white)
 
-              pygame.display.update()
-
-            
-
-           
+            # Game over message
            game_over = message("GAME OVER!" , black , 260 , 270)
            game_over = True
            running = False
 
 
+
+         # displaying the high score message when higher than score 
            if (int(score))> (int(high_score)):
                pygame.display.update()
                game_over = message("NEW HIGH SCORE" , black , 260 , 300)
@@ -192,13 +204,11 @@ while running:
                
              
         
-    
+    # High score message/fie,display and location 
     hi_score_file= open("HI_score.txt", 'w')
     hi_score_file.write( str (score))
     hi_score_file.close()
 
-           
-        
      
     score_msg="score:"+ str(score)
     highscore_msg = "high score:" + str(high_score)
@@ -208,32 +218,10 @@ while running:
 
   
 
-
-
-
-
-
      
-                                                            
-
-
-       
-    clock.tick(13)
+     #Screen updates                                                      
+    clock.tick(10)
     pygame.display.update()
-
-
-          
-
-
-        
- 
-                
-    
-        
-
-
-
-#screen update
 screen.fill(light_grey)
 
 
